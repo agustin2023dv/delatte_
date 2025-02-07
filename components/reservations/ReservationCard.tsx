@@ -20,7 +20,7 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
   const handleEditReservation = async () => {
     try {
       const updatedData: Partial<IReservation> = {
-        numAdultos: reservation.numAdultos + 1, // Ejemplo de actualización
+        numAdultos: reservation.numAdultos + 1, 
         horario: reservation.horario,
       };
 
