@@ -84,15 +84,14 @@ const UsersManagement = () => {
               {item.role === "customer" && (
                   <Link
                     href={{
-                      pathname: "/",
-                      params: { id: item._id } 
+                      pathname: "/(profile)/admin-profile/details/[user]",
+                      params: { user: item._id } 
                     }}
                   >
                     Ver perfil
                   </Link>
                 )}
-
-
+  
               <Button
                 title={item.active ? "Suspender" : "Activar"}
                 onPress={() => toggleUserStatus(item._id)}

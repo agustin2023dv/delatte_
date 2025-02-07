@@ -13,15 +13,15 @@ interface UserDetails {
 }
 
 const CustomerProfile = () => {
-  const { id } = useLocalSearchParams();
+  const { user } = useLocalSearchParams();
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchUserDetails = async () => {
     try {
       setLoading(true);
-      if (typeof id === "string") {
-        const data = await getUserDetailsService(id); 
+      if (typeof user === "string") {
+        const data = await getUserDetailsService(user); 
         setUserDetails(data);
 
       }
@@ -64,7 +64,7 @@ const CustomerProfile = () => {
           <Text style={{ fontSize: 18, marginTop: 10 }}>📝 Reviews Publicadas:</Text>
           <FlatList
             data={userDetails.reviews}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(index) => index.toString()}
             renderItem={({ item }) => <Text>- {item.restaurante}: {item.comentario}</Text>}
           />
         </View>

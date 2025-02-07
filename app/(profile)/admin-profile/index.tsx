@@ -1,17 +1,23 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {  StyleSheet } from 'react-native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import UsersManagement from './UsersManagement';
+
+
+
+const Tab = createMaterialTopTabNavigator();
+
 
 //**Componente de perfil del administrador**
 export default function AdminProfile() {
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
+    <Tab.Navigator>
+      
+      <Tab.Screen name="Users" component={UsersManagement} />
 
-        <Text>admin profile</Text>
-      </View>
-    </SafeAreaView>
+    
+  </Tab.Navigator>
   );
 }
 
