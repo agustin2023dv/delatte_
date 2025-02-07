@@ -10,9 +10,11 @@ export interface IUser extends Document {
   emailToken: string | null; // Token para la verificación del email, puede ser null si ya fue verificado
   dob?: Date; // Fecha de nacimiento opcional
   phone?: string; // Número de teléfono opcional
+  isActive:boolean;
   addresses?: string[]; // Lista opcional de direcciones
   profileImage?: string; // URL opcional de la imagen de perfil
   favoriteRestaurants?: ObjectId[]; // Lista de IDs de restaurantes favoritos
+  reviews?:ObjectId[];
   role: 'customer' | 'manager' | 'superadmin'; // Rol del usuario en el sistema
 }
  
