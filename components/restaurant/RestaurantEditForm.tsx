@@ -7,52 +7,25 @@ import {
   ScrollView,
   Button,
   Alert,
-  Modal,
+  Switch,
 } from "react-native";
 import { IRestaurant } from "@/shared/interfaces/IRestaurant";
 import { updateRestaurantService } from "@/services/restaurant.service";
-import { ImageManager } from "./ImageManager"; 
+import { ImageManager } from "./ImageManager";
+import HorariosManager from "./HorariosManager";
+import { CapacidadManager, MenuManager } from "./CapacidadManager";
 
 interface RestaurantEditFormProps {
   restaurant: IRestaurant;
-  visible: boolean; 
   onUpdate: (updatedRestaurant: IRestaurant) => void;
-  onClose: () => void; // Para cerrar el modal
 }
 
-export function RestaurantEditForm({
-  restaurant,
-  visible,
-  onUpdate,
-  onClose,
-}: RestaurantEditFormProps) {
-  const [formData, setFormData] = useState<Partial<IRestaurant>>({
-    nombre: restaurant.nombre,
-    direccion: restaurant.direccion,
-    pais: restaurant.pais,
-    localidad: restaurant.localidad,
-    codigoPostal: restaurant.codigoPostal,
-    telefono: restaurant.telefono,
-    emailContacto: restaurant.emailContacto,
-    logo: restaurant.logo,
-    descripcion: restaurant.descripcion,
-    estaAbierto: restaurant.estaAbierto,
-  });
+export function RestaurantEditForm({ restaurant, onUpdate }: RestaurantEditFormProps) {
+  const [formData, setFormData] = useState<Partial<IRestaurant>>({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setFormData({
-      nombre: restaurant.nombre,
-      direccion: restaurant.direccion,
-      pais: restaurant.pais,
-      localidad: restaurant.localidad,
-      codigoPostal: restaurant.codigoPostal,
-      telefono: restaurant.telefono,
-      emailContacto: restaurant.emailContacto,
-      logo: restaurant.logo,
-      descripcion: restaurant.descripcion,
-      estaAbierto: restaurant.estaAbierto,
-    });
+    setFormData(restaurant);
   }, [restaurant]);
 
   const handleInputChange = (field: keyof IRestaurant, value: any) => {
@@ -62,14 +35,12 @@ export function RestaurantEditForm({
   const handleUpdate = async () => {
     setLoading(true);
     try {
-      const updatedData = { ...formData };
       const updatedRestaurant = await updateRestaurantService(
         restaurant._id.toString(),
-        updatedData
+        formData
       );
       onUpdate(updatedRestaurant);
       Alert.alert("Éxito", "Restaurante actualizado correctamente.");
-      onClose();
     } catch (error) {
       console.error("Error al actualizar el restaurante:", error);
       Alert.alert("Error", "No se pudo actualizar el restaurante.");
@@ -79,48 +50,117 @@ export function RestaurantEditForm({
   };
 
   return (
-    <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Editar Restaurante</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Nombre"
-          value={formData.nombre || ""}
-          onChangeText={(value) => handleInputChange("nombre", value)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Dirección"
-          value={formData.direccion || ""}
-          onChangeText={(value) => handleInputChange("direccion", value)}
-        />
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>Editar Restaurante</Text>
 
-        <Button
-          title={loading ? "Guardando..." : "Guardar Cambios"}
-          onPress={handleUpdate}
-          disabled={loading}
+      {/* Información básica */}
+      <TextInput
+        style={styles.input}
+        placeholder="Nombre"
+        value={formData.nombre || ""}
+        onChangeText={(value) => handleInputChange("nombre", value)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Dirección"
+        value={formData.direccion || ""}
+        onChangeText={(value) => handleInputChange("direccion", value)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Localidad"
+        value={formData.localidad || ""}
+        onChangeText={(value) => handleInputChange("localidad", value)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="País"
+        value={formData.pais || ""}
+        onChangeText={(value) => handleInputChange("pais", value)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Código Postal"
+        value={formData.codigoPostal || ""}
+        onChangeText={(value) => handleInputChange("codigoPostal", value)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Teléfono"
+        value={formData.telefono || ""}
+        onChangeText={(value) => handleInputChange("telefono", value)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email de Contacto"
+        value={formData.emailContacto || ""}
+        onChangeText={(value) => handleInputChange("emailContacto", value)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Descripción"
+        value={formData.descripcion || ""}
+        onChangeText={(value) => handleInputChange("descripcion", value)}
+      />
+
+      {/* Estado del restaurante */}
+      <View style={styles.switchContainer}>
+        <Text>¿Está abierto?</Text>
+        <Switch
+          value={formData.estaAbierto || false}
+          onValueChange={(value) => handleInputChange("estaAbierto", value)}
         />
-        <Button title="Cancelar" color="red" onPress={onClose} />
+      </View>
+
+      {/* Gestión de imágenes */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>📷 Galería de Imágenes</Text>
+        <ImageManager
+          restaurantId={restaurant._id.toString()}
+          initialImages={restaurant.galeriaFotos || []}
+          onImagesUpdated={(updatedImages) => {
+            setFormData((prev) => ({ ...prev, galeriaFotos: updatedImages }));
+          }}
+        />
+      </View>
+
+      {/* Gestión de horarios */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>🗓️ Horarios de Atención</Text>
+        <HorariosManager
+          horarios={formData.horarios || []}
+          setHorarios={(updatedHorarios) =>
+            handleInputChange("horarios", updatedHorarios)
+          }
+        />
+      </View>
+
+      {/* Capacidad de mesas */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>🪑 Capacidad de Mesas</Text>
+        <CapacidadManager
+          capacidadMesas={formData.capacidadMesas || []}
+          setCapacidadMesas={(updatedCapacidad) =>
+            handleInputChange("capacidadMesas", updatedCapacidad)
+          }
+        />
+      </View>
 
 
-        <View style={styles.imageManagerContainer}>
-          <Text style={styles.imageManagerTitle}>Administrar Imágenes</Text>
-          <ImageManager
-            restaurantId={restaurant._id.toString()}
-            initialImages={restaurant.galeriaFotos || []}
-            onImagesUpdated={(updatedImages) => {
-              setFormData((prev) => ({ ...prev, galeriaFotos: updatedImages }));
-            }}
-          />
-        </View>
-      </ScrollView>
-    </Modal>
+
+      {/* Botón para guardar cambios */}
+      <Button
+        title={loading ? "Guardando..." : "Guardar Cambios"}
+        onPress={handleUpdate}
+        disabled={loading}
+      />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { padding: 20 },
-  title: { fontSize: 18, fontWeight: "bold", marginBottom: 10 },
+  title: { fontSize: 20, fontWeight: "bold", marginBottom: 15, textAlign: "center" },
   input: {
     borderWidth: 1,
     borderColor: "#ccc",
@@ -128,12 +168,22 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
   },
-  imageManagerContainer: {
-    marginTop: 20,
+  switchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 15,
   },
-  imageManagerTitle: {
-    fontSize: 16,
+  section: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "#f9f9f9",
+    borderRadius: 10,
+  },
+  sectionTitle: {
+    fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
+    textAlign: "center",
   },
 });
