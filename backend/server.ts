@@ -11,6 +11,7 @@ import adminRoutes from './src/routes/admin.routes';
 import { connectDB } from './db';
 import cors from 'cors';
 import path from 'path';
+import menuRoutes from './src/routes/menu.routes';
 
 const app = express();
 const port = process.env.SERVER_PORT || 8081; // Usa un puerto dinámico si está disponible
@@ -56,7 +57,7 @@ app.use('/api/reservas', reservationRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/favorites', favoritesRoutes);
 app.use('/api/addresses', addressesRoutes);
-
+app.use("/api/menus", menuRoutes);
 // Middleware para manejar errores globales con tipado
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
