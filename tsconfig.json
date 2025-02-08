@@ -2,9 +2,13 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "moduleResolution": "node",
+    "target": "ES6",
+    "module": "commonjs",
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "outDir": "./dist",
     "types": ["jest", "node", "react", "react-native"], 
     "baseUrl": "./",
     "paths": {

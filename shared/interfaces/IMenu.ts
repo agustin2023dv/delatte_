@@ -1,10 +1,13 @@
 import { Document, ObjectId } from 'mongoose';
 
+export interface IMenuItem {
+  nombre: string;
+  descripcion: string;
+  precio: number;
+}
+
 export interface IMenu extends Document {
-  nombre: string; // Nombre del menú (ej. "Comida", "Bebidas")
-  items: { // Lista de ítems dentro del menú
-    nombre: string; // Nombre del ítem (ej. "Pizza", "Refresco")
-    descripcion: string; // Descripción del ítem
-    precio: number; // Precio del ítem
-  }[];
+  tipo: "Comida" | "Bebidas" | "Postres";
+  items: IMenuItem[];
+  restaurante: ObjectId; 
 }

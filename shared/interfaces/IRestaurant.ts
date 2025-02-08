@@ -22,17 +22,14 @@ export interface IRestaurant extends Document {
     cantidad: number;
     personasPorMesa: number;
   }[];
-  menus: {
-    tipo: "Comida" | "Bebidas" | "Postres";
-    menuId: ObjectId;
-  }[];
+  menus: ObjectId[]; 
   managerPrincipal: ObjectId;
   coManagers: ObjectId[];
   estaAbierto: boolean;
   ultimaActualizacion: Date;
   ubicacion: {
     type: "Point";
-    coordinates: [number, number]; // [longitud, latitud]
+    coordinates: [number, number];
   };
   tags?: string[];
 }
