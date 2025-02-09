@@ -6,6 +6,7 @@ import Categories from "@/components/categories/categories";
 import Discoveries from "components/discoveries/discoveries";
 import AboutUs from "@/components/aboutUs/aboutUs"; // Nuevo componente
 import TopExperiences from "@/components/topExpiriences/topExpiriences";
+import Footer from "@/components/footer/footer";
 
 export default function HomeScreen() {
   return (
@@ -33,6 +34,7 @@ export default function HomeScreen() {
           <AboutUs />
         </View>
         <TopExperiences />
+        <Footer />
       </ScrollView>
     </SafeAreaView>
   );
