@@ -5,6 +5,7 @@ import NavBar from "@/components/navbar/navbar";
 import Categories from "@/components/categories/categories";
 import Discoveries from "components/discoveries/discoveries";
 import AboutUs from "@/components/aboutUs/aboutUs"; // Nuevo componente
+import TopExperiences from "@/components/topExpiriences/topExpiriences";
 
 export default function HomeScreen() {
   return (
@@ -31,6 +32,7 @@ export default function HomeScreen() {
         <View style={styles.aboutUsWrapper}>
           <AboutUs />
         </View>
+        <TopExperiences />
       </ScrollView>
     </SafeAreaView>
   );
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
   beansContainer: {
     position: "relative",
     width: "100%",
-    height: 140, 
+    height: 400, 
     marginTop: -50, 
     overflow: "visible",
     flexDirection: "row",
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
     right: -50,
   },
   aboutUsWrapper: {
-    marginTop: -30, 
+    marginTop: -200, 
     paddingTop: 50, 
     zIndex: 1, 
   },

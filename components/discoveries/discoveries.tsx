@@ -63,12 +63,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#6B4226",
     fontFamily: "Montserrat-Bold",
-    marginBottom: 20,
+    marginBottom: 40,
+    marginTop: 40,
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-around",
     width: "90%",
+    height: "100%",
     flexWrap: "wrap", 
   },
   item: {
@@ -81,13 +83,13 @@ const styles = StyleSheet.create({
     height: 100,
     resizeMode: "cover",
     borderRadius: 6,
-    marginBottom: 8,
+    marginBottom: 20,
   },
   itemTitle: {
     fontFamily: "Montserrat-Bold",
     fontSize: 14,
     color: "#6B4226",
-    marginBottom: 4,
+    marginBottom: 10,
   },
   itemDesc: {
     fontFamily: "Montserrat-Regular",

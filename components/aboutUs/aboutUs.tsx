@@ -38,15 +38,15 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: "#6B4226",
     fontFamily: "Montserrat-Bold",
-    marginBottom: 10,
+    marginBottom: 40,
   },
   text: {
     fontSize: 16,
     fontFamily: "Montserrat-Regular",
     color: "#6B4226",
     textAlign: "center",
-    marginBottom: 15,
-    width: "90%",
+    marginBottom: 40,
+    width: "60%",
   },
   button: {
     backgroundColor: "#6B4226",
