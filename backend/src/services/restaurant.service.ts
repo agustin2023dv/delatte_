@@ -1,7 +1,7 @@
 import { IRestaurant } from "../../../shared/interfaces/IRestaurant";
 import { getCoordinatesFromAddress } from "./distance-matrix.service";
 import Restaurant from "../models/Restaurant.model";
-
+import { ObjectId } from "mongoose";
 
 //* Servicio para obtener el restaurante del manager
 export const getRestauranteIdByManagerService = async (managerId: string) => {
@@ -167,7 +167,7 @@ export const checkUserRoleInRestaurantService = async (restaurantId: string, use
     // Verificar si el usuario es manager principal o co-manager
     return (
       restaurant.managerPrincipal?.toString() === userId ||
-      restaurant.coManagers.some((manager) => manager.toString() === userId)
+      restaurant.coManagers.some((manager: ObjectId | string) => manager.toString() === userId)
     );
   } catch (error) {
     console.error('Error en el servicio checkUserRoleInRestaurant:', error);
