@@ -33,11 +33,13 @@ export default function CustomerRegister() {
 
     if (errors) {
       setErrorMessages(errors); // Muestra los errores en pantalla
+      console.log(errors)
       return;
     }
 
     try {
       const response = await registerUserService(nombre, apellido, email, password);
+      console.log(response)
       Alert.alert(
         "Registro Exitoso",
         `Usuario registrado con éxito: ${response.user.nombre}`
