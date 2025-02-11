@@ -34,7 +34,7 @@ export default function LoginCustomer() {
     try {
       setIsLoading(true);
       await loginCustomerService(email, password);
-      router.replace("/(profile)/customer-profile/ProfileTabs");
+      router.replace("/home");
     } catch (err: any) {
       setError(err.message || "Error al iniciar sesión.");
     } finally {
@@ -70,6 +70,9 @@ export default function LoginCustomer() {
         {error && <Text style={styles.errorText}>{error}</Text>}
         <Link href="/forgotPassword/ForgotPassword" style={styles.link}>
           ¿Olvidaste tu contraseña?
+        </Link>
+        <Link href="/register" style={styles.link}>
+          ¿No estás registrado aún? Registrate aquí
         </Link>
       </View>
     </SafeAreaView>
