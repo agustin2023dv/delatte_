@@ -214,14 +214,102 @@ const ReservationsTab = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  webContainer: { flexDirection: 'row', justifyContent: 'space-between' },
-  mobileContainer: { flexDirection: 'column' },
-  reservationColumn: { flex: 1, margin: 10 },
-  title: { fontSize: 20, fontWeight: 'bold', marginVertical: 10 },
-  reservationItem: { padding: 15, backgroundColor: '#f9f9f9', borderRadius: 10, marginVertical: 5 },
-  loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  input: { borderWidth: 1, borderColor: '#ccc', padding: 8, marginVertical: 5, borderRadius: 5 },
+  container: {
+    flex: 1,
+    backgroundColor: "#F7EBE1",
+    padding: 20,
+    alignItems: "center", 
+  },
+  webContainer: {
+    flexDirection: "row",
+    justifyContent: "center", 
+    gap: 30, 
+    width: "100%",
+    maxWidth: 1200, 
+  },
+  mobileContainer: {
+    flexDirection: "column",
+    alignItems: "center", 
+    width: "100%",
+  },
+  reservationColumn: {
+    flex: 1,
+    minWidth: 300, 
+    maxWidth: 500, 
+    backgroundColor: "#FFF8F2",
+    padding: 20,
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
+    marginBottom: 20, 
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#6B4226",
+    textAlign: "center",
+    marginBottom: 15, 
+  },
+  reservationItem: {
+    backgroundColor: "#FFFFFF",
+    padding: 15,
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
+    marginBottom: 10,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#6B4226",
+    marginBottom: 5,
+  },
+  cardText: {
+    fontSize: 14,
+    color: "#4A3B30",
+    marginBottom: 3,
+  },
+  emptyText: {
+    fontSize: 14,
+    color: "#A58D7F",
+    textAlign: "center",
+    marginTop: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#A58D7F",
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 5,
+    fontSize: 14,
+    backgroundColor: "#FFFFFF",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  button: {
+    backgroundColor: "#6B4226",
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
 });
+
 
 export default ReservationsTab;
