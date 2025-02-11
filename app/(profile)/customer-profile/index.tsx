@@ -1,30 +1,23 @@
-import React, { useEffect } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import {Text} from 'react-native';
-import ProfileTabs from './ProfileTabs';
-import { router } from 'expo-router';
-import { useAuth } from '@/hooks/useAuth';
-
-
+import React, { useEffect } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Text } from "react-native";
+import ProfileTabs from "./ProfileTabs";
+import { router } from "expo-router";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function CustomerProfile() {
-  const { isSigned } = useAuth(); 
-
+  const { isSigned } = useAuth();
 
   useEffect(() => {
-    // Redirigir al usuario si no está autenticado
     if (!isSigned) {
-      router.back();
-      
+      router.replace("/(auth)/login"); // Redirige a login si no está autenticado
     }
-  }, [isSigned, router]);
-
+  }, [isSigned]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Text onPress={() => router.back()}>Go Home</Text>
+      <Text onPress={() => router.replace("/home")}>Volver a Home</Text>
       <ProfileTabs />
     </SafeAreaView>
   );
 }
-

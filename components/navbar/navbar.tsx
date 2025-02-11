@@ -3,19 +3,40 @@ import { useAuth } from "@/hooks/useAuth";
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 
-
 export default function NavBar() {
-  const { logout } = useAuth();
+  const { logout, userType } = useAuth(); 
 
   const handleLogout = () => {
     logout();
     router.replace("/(auth)/login");
   };
 
+  console.log("User Type:", userType); 
+
+  const handleProfileNavigation = () => {
+    if (!userType) {
+      router.push("/(auth)/login"); 
+      return;
+    }
+  
+    switch (userType.toLowerCase()) {
+      case "customer":
+        router.replace("/(profile)/customer-profile/ProfileTabs");
+        break;
+      case "admin":
+        router.push("/(profile)/admin-profile");
+        break;
+      case "manager":
+        router.push("/(profile)/manager-profile");
+        break;
+      default:
+        router.push("/(auth)/login");
+    }
+  };
+  
 
   return (
     <View style={styles.navbar}>
-      {/* Logo */}
       <TouchableOpacity onPress={() => router.replace("/home")}>
         <Image
           source={require("../../assets/images/logo.png")}
@@ -23,7 +44,6 @@ export default function NavBar() {
         />
       </TouchableOpacity>
 
-      {/* Navigation Links */}
       <View style={styles.linksContainer}>
         <TouchableOpacity>
           <Text style={styles.linkText}>Descubrir</Text>
@@ -34,12 +54,11 @@ export default function NavBar() {
         <TouchableOpacity>
           <Text style={styles.linkText}>Foro</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleProfileNavigation}>
           <Text style={styles.linkText}>Perfil</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Contact and Logout Buttons */}
       <View style={styles.actionButtons}>
         <TouchableOpacity style={styles.contactButton}>
           <Text style={styles.contactText}>Contacto</Text>
@@ -81,7 +100,7 @@ const styles = StyleSheet.create({
   actionButtons: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 20, 
+    gap: 20,
   },
   contactButton: {
     backgroundColor: "#6B4226",
@@ -106,3 +125,4 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
 });
+

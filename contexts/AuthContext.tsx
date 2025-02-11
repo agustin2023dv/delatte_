@@ -5,7 +5,8 @@ import { getItem, setItem, removeItem } from "@/storage/storage";
 // Interfaz para el token decodificado
 interface DecodedToken {
   id: string;
-  emailContacto: string; 
+  emailContacto: string;
+  role: string; // Asegurar que incluya el rol del usuario
   exp: number; // Expiración del token en UNIX timestamp
   iat: number;
 }
@@ -14,6 +15,7 @@ interface DecodedToken {
 interface AuthContextProps {
   id: string | null;
   email: string | null;
+  userType: string | null; // Agregado userType
   isSigned: boolean;
   isLoading: boolean;
   setSession: (token: string) => Promise<void>;
@@ -27,10 +29,10 @@ export const AuthContext = createContext<AuthContextProps | undefined>(undefined
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [id, setUserId] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
+  const [userType, setUserType] = useState<string | null>(null); // Nuevo estado
   const [isSigned, setIsSigned] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Cargar la sesión desde el almacenamiento al inicio
   useEffect(() => {
     let isMounted = true;
 
@@ -47,6 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           } else if (isMounted) {
             setUserId(decodedToken.id);
             setEmail(decodedToken.emailContacto);
+            setUserType(decodedToken.role || null); // Guardar userType
             setIsSigned(true);
           }
         }
@@ -60,7 +63,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     loadSession();
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // Función para establecer una sesión (guardar token)
@@ -78,6 +83,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       setUserId(decodedToken.id);
       setEmail(decodedToken.emailContacto);
+      setUserType(decodedToken.role || null); // Guardar userType
       setIsSigned(true);
     } catch (error) {
       console.error("❌ Error al establecer la sesión:", error);
@@ -90,6 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       await removeItem("token");
       setUserId(null);
       setEmail(null);
+      setUserType(null); // También resetear userType
       setIsSigned(false);
     } catch (error) {
       console.error("❌ Error al cerrar sesión:", error);
@@ -97,7 +104,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   return (
-    <AuthContext.Provider value={{ id, email, isSigned, isLoading, setSession, logout }}>
+    <AuthContext.Provider value={{ id, email, userType, isSigned, isLoading, setSession, logout }}>
       {children}
     </AuthContext.Provider>
   );

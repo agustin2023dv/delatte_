@@ -17,7 +17,6 @@ export default function HomeScreen() {
         <Categories />
         <Discoveries />
 
-        {/* Contenedor para fusionar los granos de café entre Discoveries y AboutUs */}
         <View style={styles.beansContainer}>
           <Image
             source={require("../../assets/images/beans.png")}
@@ -29,7 +28,6 @@ export default function HomeScreen() {
           />
         </View>
 
-        {/* Contenedor ajustado para que AboutUs no quede pegado a Beans */}
         <View style={styles.aboutUsWrapper}>
           <AboutUs />
         </View>
