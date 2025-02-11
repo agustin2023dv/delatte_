@@ -157,42 +157,48 @@ export default function AccountSettings() {
 
             {/* Modal para cambiar la contraseña */}
             <Modal
-              animationType="slide"
+              animationType="fade"
               transparent={true}
               visible={isModalVisible}
               onRequestClose={() => setModalVisible(false)}
-              >
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>Cambiar Contraseña</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Contraseña Actual"
-                  secureTextEntry
-                  value={oldPassword}
-                  onChangeText={setOldPassword}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Nueva Contraseña"
-                  secureTextEntry
-                  value={newPassword}
-                  onChangeText={setNewPassword}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Confirmar Nueva Contraseña"
-                  secureTextEntry
-                  value={confirmNewPassword}
-                  onChangeText={setConfirmNewPassword}
-                />
-                <Button title="Cambiar Contraseña" onPress={handleChangePassword} />
-                <Button title="Cancelar" color="red" onPress={() => setModalVisible(false)} />
+            >
+              <View style={styles.modalOverlay}>
+                <View style={styles.modalView}>
+                  <Text style={styles.modalText}>Cambiar Contraseña</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Contraseña Actual"
+                    secureTextEntry
+                    value={oldPassword}
+                    onChangeText={setOldPassword}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Nueva Contraseña"
+                    secureTextEntry
+                    value={newPassword}
+                    onChangeText={setNewPassword}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Confirmar Nueva Contraseña"
+                    secureTextEntry
+                    value={confirmNewPassword}
+                    onChangeText={setConfirmNewPassword}
+                  />
+                  <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={[styles.modalButton, styles.confirmButton]} onPress={handleChangePassword}>
+                      <Text style={styles.buttonText}>Cambiar</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={[styles.modalButton, styles.cancelButton]} onPress={() => setModalVisible(false)}>
+                      <Text style={styles.buttonText}>Cancelar</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </View>
             </Modal>
-
           </View>
-
-          
         </ScrollView>
         
       </SafeAreaView>
@@ -201,87 +207,153 @@ export default function AccountSettings() {
   );
 }
 
-// Estilos para el componente AccountSettings
 const styles = StyleSheet.create({
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", 
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalView: {
+    backgroundColor: "#FFF",
+    borderRadius: 12,
+    padding: 25,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5,
+    width: "85%", 
+    maxWidth: 380, 
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#6B4226",
+  },
+  input: {
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#A58D7F",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 6,
+    fontSize: 14,
+    backgroundColor: "#FFF8F2",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    marginTop: 20, 
+  },
+  modalButton: {
+    flex: 1,
+    paddingVertical: 10,
+    borderRadius: 6,
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 5, 
+  },
+  confirmButton: {
+    backgroundColor: "#007bff",
+  },
+  cancelButton: {
+    backgroundColor: "#ff4d4d",
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontWeight: "bold",
+    fontSize: 14,
+    textTransform: "uppercase",
+  },
   scrollContainer: {
-    paddingBottom: 20, 
+    paddingBottom: 20,
+    alignItems: "center",
+    backgroundColor: "#F7EBE1",
   },
   container: {
     flex: 1,
     padding: 20,
+    width: "100%",
+    maxWidth: 600, 
+    alignSelf: "center",
+    backgroundColor: "#FFF8F2",
+    borderRadius: 12,
+    paddingVertical: 30,
+    paddingHorizontal: 20,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
   },
   section: {
     marginBottom: 30,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E0C9A6",
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#6B4226",
+    marginBottom: 12,
+    textAlign: "center",
   },
   profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 120,
+    height: 120,
+    borderRadius: 60, 
+    alignSelf: "center",
     marginBottom: 10,
+    borderWidth: 3,
+    borderColor: "#6B4226",
   },
   info: {
     fontSize: 16,
-    marginBottom: 5,
+    color: "#4A3B30",
+    marginBottom: 8,
+    textAlign: "center",
   },
   button: {
-    backgroundColor: '#007bff',
-    padding: 10,
-    borderRadius: 5,
-    marginVertical: 5,
-  },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
+    backgroundColor: "#6B4226",
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginVertical: 8,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
   },
   account: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: "#FFF8F2",
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 1 },
+    elevation: 1,
   },
   connectButton: {
-    backgroundColor: '#007bff',
-    padding: 10,
+    backgroundColor: "#007bff",
+    paddingVertical: 8,
+    paddingHorizontal: 15,
     borderRadius: 5,
   },
   disconnectButton: {
-    backgroundColor: '#ff4d4d',
-    padding: 10,
+    backgroundColor: "#ff4d4d",
+    paddingVertical: 8,
+    paddingHorizontal: 15,
     borderRadius: 5,
   },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  input: {
-    width: 200,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    marginVertical: 5,
-    borderRadius: 5,
-  },
+ 
 });
-
