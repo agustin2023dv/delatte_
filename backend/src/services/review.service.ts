@@ -3,62 +3,62 @@ import { IReview } from "../../../shared/interfaces/IReview";
 import Restaurant from "../models/Restaurant.model";
 import { Review } from "../models/Review.model";
 
-
+// 🔹 CREAR una reseña
 export const createReviewService = async (
-  userId: string, // ID del usuario autenticado
+  userId: string,
   reviewData: { restaurante: string; calificacion: number; comentario: string }
 ) => {
-  try {
-    const { restaurante, calificacion, comentario } = reviewData;
+  const { restaurante, calificacion, comentario } = reviewData;
 
-    // Validar campos requeridos
-    if (!restaurante || !calificacion || !comentario) {
-      throw new Error("Todos los campos requeridos deben ser proporcionados.");
-    }
-
-    // Validar si el restaurante existe
-    const restauranteExistente = await Restaurant.findById(restaurante);
-    if (!restauranteExistente) {
-      throw new Error("El restaurante no existe.");
-    }
-
-    // Crear la reseña con ObjectId
-    const review = new Review({
-      restaurante: new mongoose.Types.ObjectId(restaurante),
-      usuario: new mongoose.Types.ObjectId(userId), // Asociar al usuario autenticado
-      calificacion,
-      comentario,
-      fecha: new Date(),
-    });
-
-    return await review.save(); // Guardar la reseña en la base de datos
-  } catch (error) {
-    console.error("Error en createReviewService:", error);
-    throw new Error("Error al crear la reseña");
+  if (!restaurante || !calificacion || !comentario) {
+    throw new Error("Todos los campos requeridos deben ser proporcionados.");
   }
+
+  const restauranteExistente = await Restaurant.findById(restaurante);
+  if (!restauranteExistente) {
+    throw new Error("El restaurante no existe.");
+  }
+
+  const review = new Review({
+    restaurante: new mongoose.Types.ObjectId(restaurante),
+    usuario: new mongoose.Types.ObjectId(userId),
+    calificacion,
+    comentario,
+    fecha: new Date(),
+  });
+
+  return await review.save();
 };
 
-  
-  export const getReviewsByRestaurantService = async (restaurantId: string) => {
-    try {
-      return await Review.find({ restaurante: restaurantId }).populate('usuario');
-    } catch (error) {
-      throw new Error('Error al obtener las reseñas del restaurante');
-    }
-  };
-  
-  export const updateReviewService = async (reviewId: string, reviewData: Partial<IReview>) => {
-    try {
-      return await Review.findByIdAndUpdate(reviewId, reviewData, { new: true });
-    } catch (error) {
-      throw new Error('Error al actualizar la reseña');
-    }
-  };
-  
-  export const deleteReviewService = async (reviewId: string) => {
-    try {
-      return await Review.findByIdAndDelete(reviewId);
-    } catch (error) {
-      throw new Error('Error al eliminar la reseña');
-    }
-  };
+// 🔹 OBTENER todas las reseñas (con paginación)
+export const getAllReviewsService = async (page = 1, limit = 10) => {
+  return await Review.find()
+    .populate("usuario", "nombre apellido email")
+    .populate("restaurante", "nombre direccion")
+    .skip((page - 1) * limit)
+    .limit(limit);
+};
+
+// 🔹 OBTENER reseñas de un restaurante
+export const getReviewsByRestaurantService = async (restaurantId: string) => {
+  return await Review.find({ restaurante: restaurantId })
+    .populate("usuario", "nombre apellido email")
+    .sort({ fecha: -1 });
+};
+
+// 🔹 OBTENER reseñas de un usuario
+export const getReviewsByUserService = async (userId: string) => {
+  return await Review.find({ usuario: userId })
+    .populate("restaurante", "nombre direccion")
+    .sort({ fecha: -1 });
+};
+
+// 🔹 ACTUALIZAR una reseña
+export const updateReviewService = async (reviewId: string, reviewData: Partial<IReview>) => {
+  return await Review.findByIdAndUpdate(reviewId, reviewData, { new: true });
+};
+
+// 🔹 ELIMINAR una reseña
+export const deleteReviewService = async (reviewId: string) => {
+  return await Review.findByIdAndDelete(reviewId);
+};

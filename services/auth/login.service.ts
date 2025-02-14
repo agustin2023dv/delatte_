@@ -5,16 +5,16 @@ import { jwtDecode } from "jwt-decode";
 
 // **Servicio para iniciar sesión como Manager**
 export const loginManagerService = async (email: string, password: string) => {
-  return await loginUser("/auth/login-manager", email, password, "Manager");
+  return await loginUser("/auth/login-manager", email, password);
 };
 
 // **Servicio para iniciar sesión como Customer**
 export const loginCustomerService = async (email: string, password: string) => {
-  return await loginUser("/auth/login-customer", email, password, "Customer");
+  return await loginUser("/auth/login-customer", email, password);
 };
 
 // **Función Genérica para el Login**
-const loginUser = async (endpoint: string, email: string, password: string, userType: string) => {
+const loginUser = async (endpoint: string, email: string, password: string) => {
   try {
     const response = await axiosInstance.post(endpoint, { email, password });
     const { token, user } = response.data;
@@ -26,13 +26,13 @@ const loginUser = async (endpoint: string, email: string, password: string, user
     await setItem("userRole", user.role);
     await setItem("userEmail", user.email);
 
-    console.log(`✅ Usuario ${userType} autenticado correctamente`);
+    console.log(`✅ Usuario  autenticado correctamente`);
     return { user: decodedUser, token };
   } catch (error) {
-    console.error(`❌ Error en login${userType}Service:`, error);
+    console.error(`❌ Error en loginService:`, error);
     throw new Error(
       axios.isAxiosError(error)
-        ? error.response?.data?.message || `Error al iniciar sesión como ${userType}`
+        ? error.response?.data?.message || `Error al iniciar sesión`
         : "Error inesperado"
     );
   }
