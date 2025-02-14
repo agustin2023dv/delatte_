@@ -5,7 +5,9 @@ import {
   getAllReservationsService, 
   updateReservationService, 
   cancelReservationService, 
-  getReservationsByIdService
+  getReservationsByIdService,
+  getReservationsByRestaurantService,
+  getReservationsByUserService
 } from '../services/reservation.service';
 import { IReservation } from '../../../shared/interfaces/IReservation';
 import { AuthRequest } from '@/types';
@@ -120,5 +122,28 @@ export const getReservationByIdController = async (req: AuthRequest, res: Respon
   } catch (error) {
     console.error("Error obteniendo la reserva:", error);
     res.status(500).json({ message: "Error obteniendo la reserva", error });
+  }
+};
+
+
+// ✅ Obtener reservas de un restaurante
+export const getReservationsByRestaurantController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { restaurantId } = req.params;
+    const reservations = await getReservationsByRestaurantService(restaurantId);
+    res.status(200).json(reservations);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener reservas del restaurante." });
+  }
+};
+
+// ✅ Obtener reservas de un usuario
+export const getReservationsByUserController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { userId } = req.params;
+    const reservations = await getReservationsByUserService(userId);
+    res.status(200).json(reservations);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener reservas del usuario." });
   }
 };

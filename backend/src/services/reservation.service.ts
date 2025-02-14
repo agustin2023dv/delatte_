@@ -117,4 +117,24 @@ export const getReservationsByIdService = async (userId: string, role: string) =
   return reservations;
 };
 
+// ✅ Obtener reservas de un restaurante
+export const getReservationsByRestaurantService = async (restaurantId: string) => {
+  try {
+    return await Reservation.find({ restaurante: restaurantId })
+      .populate("usuario", "nombre apellido email")
+      .populate("restaurante", "nombre");
+  } catch (error) {
+    throw new Error("Error al obtener reservas del restaurante.");
+  }
+};
 
+// ✅ Obtener reservas de un usuario
+export const getReservationsByUserService = async (userId: string) => {
+  try {
+    return await Reservation.find({ usuario: userId })
+      .populate("usuario", "nombre apellido email")
+      .populate("restaurante", "nombre");
+  } catch (error) {
+    throw new Error("Error al obtener reservas del usuario.");
+  }
+};

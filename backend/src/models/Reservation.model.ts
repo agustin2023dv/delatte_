@@ -1,31 +1,41 @@
-import mongoose, { Schema } from 'mongoose';
-import { IReservation } from '../../../shared/interfaces/IReservation';
+import mongoose, { Schema } from "mongoose";
+import { IReservation } from "../../../shared/interfaces/IReservation";
 
 const ReservaSchema: Schema = new Schema<IReservation>({
-  restaurante: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant', required: true }, // Referencia al restaurante
-  usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Referencia al usuario que realiza la reserva
-  fecha: { type: Date, required: true }, // Fecha completa de la reserva
-  horario: { type: String, required: true, match: /^([01]\d|2[0-3]):([0-5]\d)$/ }, // Horario en formato HH:mm
-  numAdultos: { type: Number, required: true, min: 1, default: 1 }, // Número de adultos
-  numNinos: { type: Number, min: 0, default: 0 }, // Número de niños menores de 10 años
-  pedidosEspeciales: { type: String, maxlength: 500 }, // Nota opcional del usuario
-  estado: { type: String, enum: ["Pendiente", "Confirmada", "Cancelada"], default: "Pendiente" }, // Estado de la reserva
-  fechaCreacion: { type: Date, default: Date.now }, // Fecha de creación
+  restaurante: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant", required: true },
+  usuario: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  fecha: { type: Date, required: true },
+  horario: { type: String, required: true, match: /^([01]\d|2[0-3]):([0-5]\d)$/ },
+  numAdultos: { type: Number, required: true, min: 1, default: 1 },
+  numNinos: { type: Number, min: 0, default: 0 },
+  pedidosEspeciales: { type: String, maxlength: 500 },
+  estado: { type: String, enum: ["Pendiente", "Confirmada", "Cancelada"], default: "Pendiente" },
+  fechaCreacion: { type: Date, default: Date.now },
 });
 
 // Índices para optimización de consultas
 ReservaSchema.index({ restaurante: 1 });
 ReservaSchema.index({ usuario: 1 });
 ReservaSchema.index({ fecha: 1 });
+ReservaSchema.index({ restaurante: 1, fecha: 1, horario: 1 }, { unique: false });
 
-// Middleware para actualizar automáticamente el estado de "pasada"
-ReservaSchema.pre('save', function (next) {
+// Middleware para actualizar automáticamente reservas pasadas
+ReservaSchema.pre("save", function (next) {
   const now = new Date();
-  if (this.fecha instanceof Date) {
-    this.estado = this.fecha < now ? "Cancelada" : this.estado; // Actualiza si ya pasó
+  if (this.isModified("fecha") && this.fecha instanceof Date) {
+    if (this.fecha < now && this.estado === "Pendiente") {
+      this.estado = "Cancelada";
+    }
   }
   next();
 });
 
-const Reservation = mongoose.model<IReservation>('Reservation', ReservaSchema, 'reservas');
+// Auto-populate en consultas
+ReservaSchema.pre(/^find/, function (next) {
+  this.populate("usuario", "nombre apellido email")
+      .populate("restaurante", "nombre direccion localidad pais");
+  next();
+});
+
+const Reservation = mongoose.model<IReservation>("Reservation", ReservaSchema, "reservas");
 export default Reservation;

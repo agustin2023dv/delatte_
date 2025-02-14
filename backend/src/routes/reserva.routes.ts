@@ -1,64 +1,79 @@
-import express from 'express';
+import express from "express";
 import { 
   createReservationController, 
   cancelReservationController, 
   updateReservationController, 
   getAllReservationsController, 
   getReservationByIdController, 
-  getUserReservationsController 
-} from '../controllers/reserva.controller';
-import { authMiddleware } from '../middlewares/auth.middleware';
-import { roleMiddleware } from '../middlewares/role.middleware';
-import { checkDisponibilidadMiddleware, validateReservationData } from '../middlewares/reservation.middleware'; 
+  getUserReservationsController,
+  getReservationsByRestaurantController, 
+  getReservationsByUserController 
+} from "../controllers/reserva.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
+import { roleMiddleware } from "../middlewares/role.middleware";
+import { checkDisponibilidadMiddleware, validateReservationData } from "../middlewares/reservation.middleware";
 
 const router = express.Router();
 
-// Crear una reserva (solo clientes)
+// ✅ Crear una reserva
 router.post(
-  '/create-reservation',
-  authMiddleware, // Verificar autenticación
-  roleMiddleware(['customer']), // Solo clientes pueden crear
-  validateReservationData, // Validar datos básicos
-  checkDisponibilidadMiddleware, // Validar disponibilidad
-  createReservationController // Crear la reserva
+  "/create-reservation",
+  authMiddleware,
+  validateReservationData,
+  checkDisponibilidadMiddleware,
+  createReservationController
 );
 
-// Ver reservas propias (clientes y managers)
+// ✅ Ver reservas del usuario autenticado (clientes y managers)
 router.get(
-  '/bookings',
+  "/bookings",
   authMiddleware,
-  roleMiddleware(['customer', 'manager']),
+  roleMiddleware(["customer", "manager"]),
   getUserReservationsController
 );
 
-// Cancelar una reserva (clientes y managers)
+// ✅ Obtener reservas de un restaurante (solo superadmins y managers del restaurante)
+router.get(
+  "/restaurant/:restaurantId",
+  authMiddleware,
+  roleMiddleware(["superadmin", "manager"]),
+  getReservationsByRestaurantController
+);
+
+// ✅ Obtener reservas de un usuario (solo superadmins)
+router.get(
+  "/user/:userId",
+  authMiddleware,
+  roleMiddleware(["superadmin"]),
+  getReservationsByUserController
+);
+
+// ✅ Cancelar una reserva
 router.put(
-  '/cancelar/:id',
-  roleMiddleware(['customer', 'manager']),
+  "/cancelar/:id",
   authMiddleware,
   cancelReservationController
 );
 
-// Modificar una reserva (clientes y managers)
+// ✅ Modificar una reserva
 router.put(
-  '/modificar/:id',
+  "/modificar/:id",
   authMiddleware,
-  
-  validateReservationData, // Validar datos antes de actualizar
+  validateReservationData,
   updateReservationController
 );
 
-// Traer todas las reservas (solo superadmins)
+// ✅ Obtener todas las reservas (solo superadmins)
 router.get(
-  '/all-reservations',
+  "/all-reservations",
   authMiddleware,
-  roleMiddleware(['superadmin']),
+  roleMiddleware(["superadmin"]),
   getAllReservationsController
 );
 
-// Buscar una reserva por ID (clientes, managers y superadmins)
+// ✅ Buscar una reserva por ID
 router.get(
-  '/:id',
+  "/:id",
   authMiddleware,
   getReservationByIdController
 );
