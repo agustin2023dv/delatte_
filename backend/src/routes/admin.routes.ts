@@ -4,13 +4,17 @@ import {
   suspendUserController, 
   deleteUserController, 
   updateUserController, 
-  getUserDetailsController
+  getUserDetailsController,
+  loginAdminController
 } from "../controllers/admin.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { roleMiddleware } from "../middlewares/role.middleware";
+import { loginRateLimiter } from "../middlewares/rateLimiter.middlware";
 
 const router = express.Router();
 
+
+router.post('/login-admin', loginRateLimiter, loginAdminController);
 router.get("/", authMiddleware, roleMiddleware(["superadmin"]), getUsersController);
 router.patch("/:id/suspend", authMiddleware, roleMiddleware(["superadmin"]), suspendUserController);
 router.delete("/:id", authMiddleware, roleMiddleware(["superadmin"]), deleteUserController);

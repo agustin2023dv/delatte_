@@ -31,7 +31,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 
 const corsOptions = {
-  origin: ['http://localhost:8082', 'http://192.168.1.24:8082'], // Permitir solicitudes desde el frontend
+  origin: ['http://localhost:8082', 
+           'http://192.168.1.24:8082',
+           'http://localhost:3000',], // Permitir solicitudes desde el frontend
   methods: 'GET,POST,PUT,DELETE,PATCH', // Métodos permitidos
   credentials: true, 
 };
@@ -51,7 +53,7 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 // Definir las rutas
 app.use('/api/profile', profileRoutes);
 app.use('/api/auth',authRoutes);
-app.use('/api/users',adminRoutes);
+app.use('/api/admin',adminRoutes);
 app.use('/api/restaurantes', restaurantRoutes);
 app.use('/api/reservas', reservationRoutes);
 app.use('/api/reviews', reviewRoutes);

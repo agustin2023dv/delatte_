@@ -1,10 +1,12 @@
 import { IUser } from "@/shared/interfaces/IUser";
 import User from "../models/User.model";
 import mongoose from "mongoose";
+import { comparePasswordService } from "./auth.service";
+import jwt from 'jsonwebtoken';
 
 export const getUsersService = async (role?: string) => {
   const query = role ? { role } : {}; 
-  return await User.find(query).select("-password"); 
+  return await User.find(query).select("-password").sort({ apellido: 1 }); ; 
 };
 
 // Suspender usuario (validación de ID y manejo de `isActive`)
@@ -64,5 +66,37 @@ export const suspendUserService = async (userId: string) => {
       throw new Error("ID de usuario no válido");
     }
   
-    return await User.findByIdAndUpdate(userId, updateData, { new: true });
+    // Evitar que `emailToken` sea modificado
+    const { emailToken, ...filteredUpdateData } = updateData;
+  
+    return await User.findByIdAndUpdate(userId, filteredUpdateData, { new: true }).select("-emailToken");
   };
+
+
+  //* Servicio para login de CUSTOMER
+export const loginAdminService = async (email: string, password: string) => {
+  const user = await User.findOne({ email });
+
+  // Verificar si el usuario existe
+  if (!user) {
+    throw new Error('Usuario no encontrado');
+  }
+
+  // Verificar si el rol es 'superadmin'
+  if (user.role !== 'superadmin') {
+    throw new Error('El usuario no tiene permisos para iniciar sesión como cliente');
+  }
+
+  // Verificar la contraseña
+  const isMatch = await comparePasswordService(password, user.password);
+  if (!isMatch) {
+    throw new Error('Contraseña incorrecta');
+  }
+
+  // Generar token JWT si la autenticación es correcta
+  const token = jwt.sign({ id: user._id, role: user.role}, process.env.JWT_SECRET!,
+    { expiresIn: '48h' }
+  );
+
+  return { token, user };
+};
