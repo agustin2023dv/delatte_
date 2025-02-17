@@ -1,5 +1,5 @@
 import axiosInstance from "@/config/axiosInstance";
-import { IMenu, IMenuItem } from "@/shared/interfaces/IMenu";
+import { IMenu, IMenuItem } from "@delatte/shared";
 
 // **Obtener menús de un restaurante**
 export const getMenusByRestaurantService = async (restaurantId: string) => {

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Button, StyleSheet, Dimensions, Alert, TextInput } from 'react-native';
 import { cancelReservationService, fetchUserReservationsService,
    modifyReservationService } from '@/services/reservation.service';
-import { IReservation } from '@/shared/interfaces/IReservation';
+import {IReservation} from "@delatte/shared";
 import { validateFecha, validateHorario, 
-  validateNumAdultos, validateNumNinos } from '@/shared/utils/reservation.validation';
+  validateNumAdultos, validateNumNinos } from '@delatte/shared';
 
 const ReservationsTab = () => {
   const [futureReservations, setFutureReservations] = useState<IReservation[]>([]);

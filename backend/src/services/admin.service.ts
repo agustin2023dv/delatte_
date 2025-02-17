@@ -1,8 +1,8 @@
-import { IUser } from "@/shared/interfaces/IUser";
 import User from "../models/User.model";
 import mongoose from "mongoose";
 import { comparePasswordService } from "./auth.service";
 import jwt from 'jsonwebtoken';
+import { IUser } from "@delatte/shared";
 
 export const getUsersService = async (role?: string) => {
   const query = role ? { role } : {}; 

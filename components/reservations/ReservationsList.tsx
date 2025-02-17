@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text } from 'react-native';
-import { IReservation } from '@/shared/interfaces/IReservation';
+import { IReservation } from '@delatte/shared';
 import ReservationCard from './ReservationCard';
 
 interface ReservationsListProps {

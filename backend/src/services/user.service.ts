@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import { comparePasswordService } from './auth.service';
 import jwt from 'jsonwebtoken';
 import { sendEmailService } from './email.service';
-import { IUser } from '../../../shared/interfaces/IUser';
+import { IUser } from '@delatte/shared';
 import mongoose from 'mongoose';
 
 

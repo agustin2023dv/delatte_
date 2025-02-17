@@ -1,5 +1,5 @@
+import { IReservation } from "@delatte/shared";
 import mongoose, { Schema } from "mongoose";
-import { IReservation } from "../../../shared/interfaces/IReservation";
 
 const ReservaSchema: Schema = new Schema<IReservation>({
   restaurante: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant", required: true },
@@ -30,12 +30,7 @@ ReservaSchema.pre("save", function (next) {
   next();
 });
 
-// Auto-populate en consultas
-ReservaSchema.pre(/^find/, function (next) {
-  this.populate("usuario", "nombre apellido email")
-      .populate("restaurante", "nombre direccion localidad pais");
-  next();
-});
+
 
 const Reservation = mongoose.model<IReservation>("Reservation", ReservaSchema, "reservas");
 export default Reservation;

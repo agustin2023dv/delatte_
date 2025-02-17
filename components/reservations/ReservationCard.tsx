@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, Alert } from 'react-native';
-import { IReservation } from '@/shared/interfaces/IReservation';
+import { IReservation } from '@delatte/shared';
 import { cancelReservationService, modifyReservationService } from '@/services/reservation.service';
 
 interface ReservationCardProps {

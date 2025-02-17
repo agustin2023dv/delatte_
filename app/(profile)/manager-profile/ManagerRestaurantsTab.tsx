@@ -1,9 +1,9 @@
 import React, { useState, useEffect} from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { IRestaurant } from "../../../shared/interfaces/IRestaurant";
 import RestaurantsList from "../../../components/restaurant/RestaurantList";
 import { getRestaurantsByManagerIdService } from "services/restaurant.service";
 import {useAuth} from 'hooks/useAuth';
+import { IRestaurant } from "@delatte/shared";
 
 const ManagerRestaurantsTab: React.FC = () => {
   const {id} = useAuth();

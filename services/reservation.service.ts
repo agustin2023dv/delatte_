@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Platform } from 'react-native';
 import { getItem } from 'storage/storage';
-import { IReservation } from 'shared/interfaces/IReservation';
+import { IReservation } from '@delatte/shared';
 
 // Detectar entorno (web o mobile)
 const API_URL =

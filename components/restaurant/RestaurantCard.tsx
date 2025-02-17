@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Text } from "react-native-paper";
-import { IRestaurant } from "@/shared/interfaces/IRestaurant";
+import { IRestaurant } from "@delatte/shared";
 import { Button } from "react-native";
 
 interface RestaurantCardProps {

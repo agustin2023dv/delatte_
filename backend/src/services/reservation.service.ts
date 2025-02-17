@@ -1,5 +1,5 @@
 import Reservation from '../models/Reservation.model';
-import { IReservation } from '../../../shared/interfaces/IReservation';
+import { IReservation } from '@delatte/shared';
 import { getRestauranteIdByManagerService } from './restaurant.service';
 import mongoose from 'mongoose';
 
@@ -34,7 +34,7 @@ export const createReservationService = async (reservationData: Partial<IReserva
 export const getReservationByIdService = async (id: string) => {
   return await Reservation.findById(id)
     .populate("restaurante", "nombre direccion")
-    .populate("usuario", "nombre email"); 
+    .populate("usuario", "nombre apellido email"); 
 };
 
 
@@ -86,7 +86,7 @@ export const getAllReservationsService = async () => {
   try {
     return await Reservation.find()
       .populate("restaurante", "nombre direccion")
-      .populate("usuario", "nombre email"); 
+      .populate("usuario", "nombre apellido email"); 
   } catch (error) {
     throw new Error("Error obteniendo todas las reservas");
   }
@@ -99,12 +99,12 @@ export const getReservationsByIdService = async (userId: string, role: string) =
   if (role === "customer") {
     // Obtener reservas del cliente
     reservations = await Reservation.find({ usuario: userId }) // Cambiado cliente -> usuario
-      .populate("restaurante", "nombre direccion");
+      .populate("restaurante", "nombre apellido direccion");
   } else if (role === "manager") {
     // Obtener reservas del restaurante del manager
     const restauranteId = await getRestauranteIdByManagerService(userId);
     reservations = await Reservation.find({ restaurante: restauranteId })
-      .populate("usuario", "nombre email"); // Cambiado cliente -> usuario
+      .populate("usuario", "nombre direccion email"); // Cambiado cliente -> usuario
   } else {
     throw new Error("Rol no válido o usuario no encontrado.");
   }
@@ -122,7 +122,7 @@ export const getReservationsByRestaurantService = async (restaurantId: string) =
   try {
     return await Reservation.find({ restaurante: restaurantId })
       .populate("usuario", "nombre apellido email")
-      .populate("restaurante", "nombre");
+      .populate("restaurante", "nombre direccion");
   } catch (error) {
     throw new Error("Error al obtener reservas del restaurante.");
   }

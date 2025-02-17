@@ -1,8 +1,6 @@
 import mongoose, { ObjectId } from "mongoose";
 import User from "../models/User.model";
 
-
-
 export const getUserFavoritesService = async (userId: string) => {
   const user = await User.findById(userId).populate("favoriteRestaurants");
 
@@ -64,7 +62,7 @@ export const removeFavoriteRestaurantService = async (userId: string, restaurant
 
     if (user.favoriteRestaurants.includes(restaurantId as unknown as ObjectId)) {
       user.favoriteRestaurants = user.favoriteRestaurants.filter(
-        (id) => id.toString() !== restaurantId
+        (id: { toString: () => string; }) => id.toString() !== restaurantId
       );
       await user.save();
     }

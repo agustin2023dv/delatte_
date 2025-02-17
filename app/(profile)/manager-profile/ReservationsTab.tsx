@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { fetchUserReservationsService } from '@/services/reservation.service';
-import { IReservation } from '@/shared/interfaces/IReservation';
 import ReservationsList from '../../../components/reservations/ReservationsList';
+import { IReservation } from '@delatte/shared';
 
 const ReservationsTab: React.FC = () => {
   const [reservations, setReservations] = useState<IReservation[]>([]);

@@ -11,8 +11,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, router } from "expo-router";
-import { validateEmail, validatePassword } from "@/shared/utils/auth.validation";
 import { loginManagerService } from "@/services/auth/login.service";
+import { validateEmail, validatePassword } from "@delatte/shared";
 
 export default function LoginManager() {
   const [email, setEmail] = useState("");

@@ -11,11 +11,12 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { IUser } from "@/shared/interfaces/IUser";
+
 import {
   fetchUserDataService,
   updateUserDataService,
 } from "@/services/user/profile.service";
+import { IUser } from "@delatte/shared";
 
 export default function AccountSettings() {
   const [managerData, setManagerData] = useState<IUser | null>(null);

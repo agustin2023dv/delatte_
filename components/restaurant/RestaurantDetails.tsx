@@ -12,7 +12,7 @@ import {
   getRestaurantByIdService,
   isUserManagerService,
 } from "../../services/restaurant.service";
-import { IRestaurant } from "../../shared/interfaces/IRestaurant";
+import { IRestaurant } from "@delatte/shared";
 import { FavoriteButton } from "../buttons/FavoriteButton";
 import { ActivityIndicator } from "react-native-paper";
 import { ReservationForm } from "../reservations/ReservationForm";

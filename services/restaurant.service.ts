@@ -1,6 +1,5 @@
 import axiosInstance from "@/config/axiosInstance";
-import { IRestaurant } from "@/shared/interfaces/IRestaurant";
-import { IUser } from "@/shared/interfaces/IUser";
+import { IRestaurant,IUser } from "@delatte/shared";
 
 // **Crear manager y restaurante**
 export const createRestaurantAndManagerService = async (

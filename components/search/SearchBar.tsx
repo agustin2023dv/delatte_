@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Button, Alert, Platform, Text, TextInput, TouchableOpacity } from "react-native";
 import { Modal, Searchbar } from "react-native-paper";
 import * as Location from "expo-location";
-import { IRestaurant } from "@/shared/interfaces/IRestaurant";
+import { IRestaurant } from "@delatte/shared";
 import { getNearbyRestaurantsService, searchRestaurantsService } from "@/services/restaurant.service";
 import RestaurantsList from "@/components/restaurant/RestaurantList";
 import { Ionicons } from "@expo/vector-icons";

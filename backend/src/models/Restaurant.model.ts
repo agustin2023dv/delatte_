@@ -1,5 +1,5 @@
+import { IRestaurant } from '@delatte/shared';
 import mongoose, { Schema, Document, Model } from 'mongoose';
-import { IRestaurant } from "../../../shared/interfaces/IRestaurant";
 
 // Define the schema for Restaurant
 const RestaurantSchema: Schema = new Schema({

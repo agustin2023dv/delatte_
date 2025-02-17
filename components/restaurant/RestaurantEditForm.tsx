@@ -9,7 +9,7 @@ import {
   Alert,
   Switch,
 } from "react-native";
-import { IRestaurant } from "@/shared/interfaces/IRestaurant";
+import { IRestaurant } from "@delatte/shared";
 import { updateRestaurantService } from "@/services/restaurant.service";
 import { ImageManager } from "./ImageManager";
 import HorariosManager from "./HorariosManager";

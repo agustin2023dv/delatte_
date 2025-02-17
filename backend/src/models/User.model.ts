@@ -1,5 +1,5 @@
+import { IUser } from '@delatte/shared';
 import mongoose, { Schema } from 'mongoose';
-import { IUser } from '../../../shared/interfaces/IUser';
 
 const UserSchema: Schema = new Schema({
   nombre: { type: String }, // Nombre del usuario

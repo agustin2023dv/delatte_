@@ -1,4 +1,5 @@
-import { IMenu, IMenuItem } from "@/shared/interfaces/IMenu";
+
+import { IMenu, IMenuItem } from "@delatte/shared";
 import mongoose, { Schema } from "mongoose";
 
 

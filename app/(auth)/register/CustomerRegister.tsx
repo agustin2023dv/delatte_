@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { validateNombre, validateApellido, validateEmail, 
-  validatePassword, validateConfirmPassword } from '../../../shared/utils/auth.validation';
+  validatePassword, validateConfirmPassword } from '@delatte/shared';
 import { router } from 'expo-router';
 import { registerUserService } from '@/services/auth/register.service';
 
