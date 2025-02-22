@@ -1,30 +1,27 @@
 import { router } from "expo-router";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth"; 
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 
 export default function NavBar() {
-  const { logout, userType } = useAuth(); 
+  const { logout, userRole } = useAuth(); 
 
   const handleLogout = () => {
     logout();
     router.replace("/(auth)/login");
   };
 
-  console.log("User Type:", userType); 
+  console.log("User Role:", userRole); 
 
   const handleProfileNavigation = () => {
-    if (!userType) {
+    if (!userRole) {
       router.push("/(auth)/login"); 
       return;
     }
   
-    switch (userType.toLowerCase()) {
+    switch (userRole.toLowerCase()) {
       case "customer":
         router.replace("/(profile)/customer-profile/ProfileTabs");
-        break;
-      case "admin":
-        router.push("/(profile)/admin-profile");
         break;
       case "manager":
         router.push("/(profile)/manager-profile");
@@ -33,7 +30,6 @@ export default function NavBar() {
         router.push("/(auth)/login");
     }
   };
-  
 
   return (
     <View style={styles.navbar}>
@@ -125,4 +121,3 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
 });
-
