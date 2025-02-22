@@ -9,7 +9,7 @@ import {
   getReservationsByRestaurantService,
   getReservationsByUserService
 } from '../services/reservation.service';
-import { IReservation } from '@delatte/shared';
+import { IReservation } from '@delatte/shared/interfaces';
 import { AuthRequest } from '@/types';
 
 //* Controlador para CREAR una reserva

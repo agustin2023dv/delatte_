@@ -1,4 +1,4 @@
-import { IReview } from '@delatte/shared';
+import { IReview } from '@delatte/shared/interfaces';
 import mongoose, { Schema } from 'mongoose';
 
 const ReviewSchema = new Schema<IReview>({

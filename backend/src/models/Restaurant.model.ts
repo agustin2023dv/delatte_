@@ -1,4 +1,4 @@
-import { IRestaurant } from '@delatte/shared';
+import { IRestaurant } from '@delatte/shared/interfaces';
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 // Define the schema for Restaurant

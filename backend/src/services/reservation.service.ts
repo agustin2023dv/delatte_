@@ -1,5 +1,5 @@
 import Reservation from '../models/Reservation.model';
-import { IReservation } from '@delatte/shared';
+import { IReservation } from '@delatte/shared/interfaces';
 import { getRestauranteIdByManagerService } from './restaurant.service';
 import mongoose from 'mongoose';
 

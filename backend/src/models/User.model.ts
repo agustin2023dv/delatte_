@@ -1,4 +1,4 @@
-import { IUser } from '@delatte/shared';
+import { IUser } from '@delatte/shared/interfaces';
 import mongoose, { Schema } from 'mongoose';
 
 const UserSchema: Schema = new Schema({

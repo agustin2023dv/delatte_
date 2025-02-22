@@ -1,4 +1,4 @@
-import { IReservation } from "@delatte/shared";
+import { IReservation } from "@delatte/shared/interfaces";
 import mongoose, { Schema } from "mongoose";
 
 const ReservaSchema: Schema = new Schema<IReservation>({

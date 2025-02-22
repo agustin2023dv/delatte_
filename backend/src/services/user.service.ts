@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import { comparePasswordService } from './auth.service';
 import jwt from 'jsonwebtoken';
 import { sendEmailService } from './email.service';
-import { IUser } from '@delatte/shared';
+import { IUser } from '@delatte/shared/interfaces';
 import mongoose from 'mongoose';
 
 
@@ -168,7 +168,7 @@ export const getUserDataService = async (userId: string) => {
       throw new Error("Usuario no encontrado");
     }
 
-    return user;
+    return user as IUser;
   } catch (error) {
     console.error("Error obteniendo datos del usuario:", error);
     throw new Error("Error al obtener los datos del usuario");

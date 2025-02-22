@@ -2,7 +2,7 @@ import User from "../models/User.model";
 import mongoose from "mongoose";
 import { comparePasswordService } from "./auth.service";
 import jwt from 'jsonwebtoken';
-import { IUser } from "@delatte/shared";
+import { IUser } from "@delatte/shared/interfaces";
 
 export const getUsersService = async (role?: string) => {
   const query = role ? { role } : {}; 

@@ -15,7 +15,6 @@ import {
 import { sendEmailService } from "../services/email.service";
 import User from "../models/User.model";
 import { AuthRequest } from "@/types";
-import { loginAdminService } from "../services/admin.service";
 
 //** Controlador para registrar un nuevo usuario **
 export const registrarUsuarioController = async (req: AuthRequest, res: Response): Promise<void> => {

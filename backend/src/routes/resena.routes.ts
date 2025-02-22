@@ -8,7 +8,7 @@ import {
   deleteReviewController 
 } from '../controllers/resena.controller';
 
-import { validateReview, validateReviewUpdate } from '@delatte/shared';
+import { validateReview, validateReviewUpdate } from '@delatte/shared/utils';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import { roleMiddleware } from '../middlewares/role.middleware';
 

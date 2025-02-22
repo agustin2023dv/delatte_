@@ -1,4 +1,4 @@
-import { IMenu, IMenuItem } from "@delatte/shared";
+import { IMenu, IMenuItem } from "@delatte/shared/interfaces";
 import mongoose from "mongoose";
 import Menu from "../models/Menu.model";
 

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IReview } from "@delatte/shared";
+import { IReview } from "@delatte/shared/interfaces";
 import Restaurant from "../models/Restaurant.model";
 import { Review } from "../models/Review.model";
 

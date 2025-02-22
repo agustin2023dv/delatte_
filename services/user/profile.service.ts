@@ -1,4 +1,4 @@
-import { IUser } from '@delatte/shared';
+import { IUser } from '@delatte/shared/interfaces';
 import axiosInstance from '@/config/axiosInstance';
 
 // **Función para obtener datos de usuario**

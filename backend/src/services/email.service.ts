@@ -1,4 +1,4 @@
-import { EmailOptions } from '@delatte/shared';
+import { EmailOptions } from '@delatte/shared/interfaces';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 
