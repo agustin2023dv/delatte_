@@ -204,8 +204,14 @@ export const updateUserDataService = async (userData: Partial<IUser>) => {
     console.error('Error al actualizar los datos del usuario:', error);
     throw error;
   }
+}
+
+export const getUserByIDService = async (userId: string) => {
+  try {
+      const user = await User.findById(userId);
+      return user;
+  } catch (error) {
+      console.error("Error al obtener usuario por ID:", error);
+      throw new Error("Error interno del servidor");
+  }
 };
-
-
-
-

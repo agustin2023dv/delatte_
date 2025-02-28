@@ -1,5 +1,6 @@
 import { Response } from "express";
 import { 
+  getUserByIDService,
   getUserDataService, 
   loginCustomerService, 
   loginManagerService, 
@@ -178,5 +179,26 @@ export const resetPasswordController = async (req: AuthRequest, res: Response): 
   } catch (error) {
     console.error("Error en resetPasswordController:", error);
     res.status(500).json({ message: "Error al restablecer la contraseña." });
+  }
+};
+
+
+export const getUserByIDController = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    
+      const {id} = req.params;
+
+      if (!id) {
+           res.status(404).json({ message: "Usuario no encontrado" });
+           return;
+      }
+
+      const user = getUserByIDService(id);
+      
+      res.status(200).json(user);
+  } catch (error) {
+      console.error("Error en getUserByIDController:", error);
+      res.status(500).json({ message: "Error interno del servidor" });
+      return;
   }
 };

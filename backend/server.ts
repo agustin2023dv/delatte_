@@ -8,6 +8,7 @@ import addressesRoutes from './src/routes/addresses.routes';
 import reviewRoutes from './src/routes/resena.routes';
 import authRoutes from './src/routes/auth.routes';
 import adminRoutes from './src/routes/admin.routes';
+import cloudinaryRoutes from "./src/routes/cloudinary.routes";
 import { connectDB } from './db';
 import cors from 'cors';
 import path from 'path';
@@ -52,6 +53,7 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // Definir las rutas
 app.use('/api/profile', profileRoutes);
+app.use("/api/cloudinary", cloudinaryRoutes);
 app.use('/api/auth',authRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api/restaurantes', restaurantRoutes);
