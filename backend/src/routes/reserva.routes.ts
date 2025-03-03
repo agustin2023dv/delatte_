@@ -34,7 +34,7 @@ router.get(
 
 // ✅ Obtener reservas de un restaurante (solo superadmins y managers del restaurante)
 router.get(
-  "/restaurant/:restaurantId",
+  "/restaurant/:id",
   authMiddleware,
   roleMiddleware(["superadmin", "manager"]),
   getReservationsByRestaurantController
@@ -42,7 +42,7 @@ router.get(
 
 // ✅ Obtener reservas de un usuario (solo superadmins)
 router.get(
-  "/user/:userId",
+  "/user/:id",
   authMiddleware,
   roleMiddleware(["superadmin"]),
   getReservationsByUserController

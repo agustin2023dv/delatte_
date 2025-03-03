@@ -15,13 +15,13 @@ import { roleMiddleware } from '../middlewares/role.middleware';
 const router = express.Router();
 
 // 🔹 Obtener todas las reseñas (Solo Superadmin)
-router.get('/all', authMiddleware, roleMiddleware(['superadmin']), getAllReviewsController);
+router.get('/', authMiddleware, roleMiddleware(['superadmin']), getAllReviewsController);
 
 // 🔹 Obtener reseñas por restaurante
-router.get('/restaurant/:restaurantId', getReviewsByRestaurantController);
+router.get('/restaurant/:id', authMiddleware, getReviewsByRestaurantController);
 
 // 🔹 Obtener reseñas por usuario
-router.get('/user/:userId', authMiddleware, getReviewsByUserController);
+router.get('/user/:id', authMiddleware, getReviewsByUserController);
 
 // 🔹 Crear una nueva reseña (Solo clientes pueden dejar reseñas)
 router.post('/create-review', 
@@ -31,7 +31,7 @@ router.post('/create-review',
     createReviewController);
 
 // 🔹 Editar una reseña (Solo clientes pueden editar sus reseñas)
-router.put('/:reviewId', 
+router.put('/:id', 
     authMiddleware, 
     roleMiddleware(['customer']),
     validateReviewUpdate, 
@@ -39,7 +39,7 @@ router.put('/:reviewId',
 
 // 🔹 Borrar una reseña (Clientes pueden borrar su reseña / Superadmin puede borrar cualquier reseña)
 router.delete(
-    '/:reviewId', 
+    '/:id/delete', 
     authMiddleware, 
     roleMiddleware(['customer', 'superadmin']), 
     deleteReviewController

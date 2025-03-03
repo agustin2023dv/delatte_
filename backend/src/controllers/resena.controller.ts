@@ -38,7 +38,7 @@ export const getAllReviewsController = async (req: AuthRequest, res: Response): 
 // 🔹 OBTENER reseñas de un restaurante
 export const getReviewsByRestaurantController = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const reviews = await getReviewsByRestaurantService(req.params.restaurantId);
+    const reviews = await getReviewsByRestaurantService(req.params.id);
     res.status(200).json(reviews);
   } catch (error) {
     res.status(500).json({ message: "Error al obtener las reseñas del restaurante." });

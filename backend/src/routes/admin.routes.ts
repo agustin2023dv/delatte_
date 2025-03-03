@@ -18,7 +18,9 @@ router.post('/login-admin', loginRateLimiter, loginAdminController);
 router.get("/", authMiddleware, roleMiddleware(["superadmin"]), getUsersController);
 router.patch("/:id/suspend", authMiddleware, roleMiddleware(["superadmin"]), suspendUserController);
 router.delete("/:id", authMiddleware, roleMiddleware(["superadmin"]), deleteUserController);
-router.put("/:id", authMiddleware, roleMiddleware(["superadmin"]), updateUserController);
-router.get("/:id", authMiddleware, roleMiddleware(["superadmin"]), getUserDetailsController);
+router.get("/:id",authMiddleware, getUserDetailsController);
+router.put("/:id/update", authMiddleware, roleMiddleware(["superadmin"]), updateUserController);
+
+
 
 export default router;

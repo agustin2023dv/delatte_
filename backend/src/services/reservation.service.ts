@@ -133,7 +133,7 @@ export const getReservationsByUserService = async (userId: string) => {
   try {
     return await Reservation.find({ usuario: userId })
       .populate("usuario", "nombre apellido email")
-      .populate("restaurante", "nombre");
+      .populate("restaurante", "nombre direccion");
   } catch (error) {
     throw new Error("Error al obtener reservas del usuario.");
   }

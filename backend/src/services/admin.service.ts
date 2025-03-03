@@ -5,9 +5,16 @@ import jwt from 'jsonwebtoken';
 import { IUser } from "@delatte/shared/interfaces";
 
 export const getUsersService = async (role?: string) => {
-  const query = role ? { role } : {}; 
-  return await User.find(query).select("-password").sort({ apellido: 1 }); ; 
+  try {
+    const query = role ? { role } : {}; 
+    return await User.find(query)
+      .select("-password")
+      .sort({ apellido: 1, nombre: 1 });
+  } catch (error) {
+    throw new Error("Error al obtener usuarios de la base de datos");
+  }
 };
+
 
 // Suspender usuario (validación de ID y manejo de `isActive`)
 export const suspendUserService = async (userId: string) => {
@@ -46,19 +53,18 @@ export const suspendUserService = async (userId: string) => {
   };
   
   export const getUserDetailsService = async (userId: string) => {
-    return await User.findById(userId)
-      .populate("favoriteRestaurants", "nombre") // Solo el nombre del restaurante favorito
-      .populate({
-        path: "reservations",
-        select: "-_id", // Trae todo excepto `_id`
-        populate: { path: "restaurante", select: "nombre direccion telefono emailContacto" }, // Muestra datos clave del restaurante
-      })
-      .populate({
-        path: "reviews",
-        select: "-_id -ultimaActualizacion", // Excluye `ultimaActualizacion`
-        populate: { path: "restaurante", select: "nombre" }, // Muestra solo el nombre del restaurante en la review
-      });
+    try {
+      const user= await User.findById(userId);
+      if (!user) {
+        throw new Error('fkn user no encontrado');
+      }
+  
+      return user;
+    } catch (error) {
+      throw new Error('Error al obtener los detalles del user');
+    }
   };
+  
 
   // Actualizar usuario (validación de ID)
   export const updateUserService = async (userId: string, updateData: Partial<IUser>) => {
@@ -67,7 +73,7 @@ export const suspendUserService = async (userId: string) => {
     }
   
     // Evitar que `emailToken` sea modificado
-    const { emailToken, ...filteredUpdateData } = updateData;
+    const { emailToken, password, ...filteredUpdateData } = updateData;
   
     return await User.findByIdAndUpdate(userId, filteredUpdateData, { new: true }).select("-emailToken");
   };
