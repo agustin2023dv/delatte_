@@ -121,8 +121,7 @@ export const getReservationsByIdService = async (userId: string, role: string) =
 export const getReservationsByRestaurantService = async (restaurantId: string) => {
   try {
     return await Reservation.find({ restaurante: restaurantId })
-      .populate("usuario", "nombre apellido email")
-      .populate("restaurante", "nombre direccion");
+      .populate("usuario", "nombre apellido email phone")
   } catch (error) {
     throw new Error("Error al obtener reservas del restaurante.");
   }

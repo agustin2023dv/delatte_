@@ -9,7 +9,7 @@ const ReservaSchema: Schema = new Schema<IReservation>({
   numAdultos: { type: Number, required: true, min: 1, default: 1 },
   numNinos: { type: Number, min: 0, default: 0 },
   pedidosEspeciales: { type: String, maxlength: 500 },
-  estado: { type: String, enum: ["Pendiente", "Confirmada", "Cancelada"], default: "Pendiente" },
+  estado: { type: String, enum: ["Pasada", "Confirmada", "Cancelada"], default: "Confirmada" },
   fechaCreacion: { type: Date, default: Date.now },
 });
 
