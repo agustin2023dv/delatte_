@@ -1,35 +1,111 @@
 import Reservation from '../models/Reservation.model';
 import { IReservation } from '@delatte/shared/interfaces';
 import { getRestauranteIdByManagerService } from './restaurant.service';
+import Restaurant from '../models/Restaurant.model';
 import mongoose from 'mongoose';
 
-// Servicio para crear una reserva
-export const createReservationService = async (reservationData: Partial<IReservation>) => {
-  const { restaurante, usuario, fecha, horario, numAdultos, numNinos, pedidosEspeciales } = reservationData;
-
-  // Validar campos obligatorios
-  if (!restaurante || !usuario || !fecha || !horario || numAdultos === undefined || numNinos === undefined) {
-    throw new Error("Todos los campos obligatorios deben ser proporcionados.");
+/**
+ * Crea una reserva como cliente (customer)
+ */
+export const createCustomerReservationService = async (
+  userId: string,
+  restauranteId: string,
+  fecha: Date,
+  horario: string,
+  numAdultos: number,
+  numNinos: number,
+  pedidosEspeciales?: string
+) => {
+  // Verifica que el restaurante exista y esté abierto
+  const restaurant = await Restaurant.findById(restauranteId);
+  if (!restaurant) {
+    throw new Error("Restaurante no encontrado");
   }
 
-  // Convertir restaurante de string a ObjectId
-  const restauranteId = new mongoose.Types.ObjectId(restaurante as unknown as string);
-
-  // Crear la reserva
-  const newReservation = new Reservation({
-    restaurante: restauranteId, // Convertido a ObjectId
-    usuario,
+  return await Reservation.create({
+    usuario: userId,
+    restaurante: restauranteId,
     fecha,
     horario,
     numAdultos,
     numNinos,
     pedidosEspeciales,
-    estado: "Pendiente",
-    fechaCreacion: new Date(),
+    estado: "Confirmada",
   });
-
-  return await newReservation.save();
 };
+
+/**
+ * Crea una reserva como manager (para clientes)
+ */
+
+export const createManagerReservationService = async (
+  managerId: string,
+  clienteId: string,
+  restauranteId: string,
+  fecha: Date,
+  horario: string,
+  numAdultos: number,
+  numNinos: number,
+  pedidosEspeciales?: string
+) => {
+  // Convertir los IDs a `ObjectId`
+  const restauranteObjectId = new mongoose.Types.ObjectId(restauranteId);
+  const clienteObjectId = new mongoose.Types.ObjectId(clienteId);
+  const managerObjectId = new mongoose.Types.ObjectId(managerId);
+
+  // Buscar el restaurante
+  const restaurant = await Restaurant.findById(restauranteObjectId);
+  if (!restaurant) {
+    throw new Error("Restaurante no encontrado");
+  }
+
+  // Verificar si el manager tiene permisos sobre el restaurante
+  const esCoManager = restaurant.coManagers.some(
+    (coManager) => coManager.toString() === managerObjectId.toString()
+  );
+  const esManagerPrincipal = restaurant.managerPrincipal.toString() === managerObjectId.toString();
+
+  if (!esCoManager && !esManagerPrincipal) {
+    throw new Error("No puedes crear reservas en un restaurante que no administras");
+  }
+
+  // Crear la reserva
+  return await Reservation.create({
+    usuario: clienteObjectId,
+    restaurante: restauranteObjectId,
+    fecha,
+    horario,
+    numAdultos,
+    numNinos,
+    pedidosEspeciales,
+    estado: "Confirmada",
+  });
+};
+/**
+ * Crea una reserva como superadmin (puede forzar reservas)
+ */
+export const createSuperadminReservationService = async (
+  clienteId: string,
+  restauranteId: string,
+  fecha: Date,
+  horario: string,
+  numAdultos: number,
+  numNinos: number,
+  pedidosEspeciales?: string
+) => {
+  return await Reservation.create({
+    usuario: clienteId,
+    restaurante: restauranteId,
+    fecha,
+    horario,
+    numAdultos,
+    numNinos,
+    pedidosEspeciales,
+    estado: "Confirmada",
+  });
+};
+
+
 // Servicio para obtener una reserva por su ID
 export const getReservationByIdService = async (id: string) => {
   return await Reservation.findById(id)

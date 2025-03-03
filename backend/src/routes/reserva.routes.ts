@@ -1,13 +1,13 @@
 import express from "express";
 import { 
-  createReservationController, 
   cancelReservationController, 
   updateReservationController, 
   getAllReservationsController, 
   getReservationByIdController, 
   getUserReservationsController,
   getReservationsByRestaurantController, 
-  getReservationsByUserController 
+  getReservationsByUserController, 
+  createReservationController
 } from "../controllers/reserva.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { roleMiddleware } from "../middlewares/role.middleware";
@@ -15,18 +15,17 @@ import { checkDisponibilidadMiddleware, validateReservationData } from "../middl
 
 const router = express.Router();
 
-// ✅ Crear una reserva
 router.post(
-  "/create-reservation",
-  authMiddleware,
-  validateReservationData,
-  checkDisponibilidadMiddleware,
+  "/",
+  authMiddleware, // Verifica autenticación
+  validateReservationData, // Valida los datos de la reserva
+  checkDisponibilidadMiddleware, // Verifica disponibilidad del restaurante
   createReservationController
 );
 
 // ✅ Ver reservas del usuario autenticado (clientes y managers)
 router.get(
-  "/bookings",
+  "/",
   authMiddleware,
   roleMiddleware(["customer", "manager"]),
   getUserReservationsController
@@ -57,7 +56,7 @@ router.put(
 
 // ✅ Modificar una reserva
 router.put(
-  "/modificar/:id",
+  "/modificar/:id", 
   authMiddleware,
   validateReservationData,
   updateReservationController

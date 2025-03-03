@@ -1,36 +1,54 @@
 import { Request, Response } from 'express';
 import { 
-  createReservationService, 
   getReservationByIdService, 
   getAllReservationsService, 
   updateReservationService, 
   cancelReservationService, 
   getReservationsByIdService,
   getReservationsByRestaurantService,
-  getReservationsByUserService
+  getReservationsByUserService,
+  createCustomerReservationService,
+  createManagerReservationService,
+  createSuperadminReservationService
 } from '../services/reservation.service';
 import { IReservation } from '@delatte/shared/interfaces';
 import { AuthRequest } from '@/types';
 
-//* Controlador para CREAR una reserva
 
+/**
+ * Controlador para crear una reserva según el rol del usuario autenticado
+ */
 export const createReservationController = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    if (!req.user) {
-      res.status(401).json({ message: "Usuario no autenticado." });
+    const userId = req.user.id; // ID del usuario autenticado
+    const { restauranteId, fecha, horario, numAdultos, numNinos, pedidosEspeciales, clienteId } = req.body;
+    const userRole = req.user.role; // customer, manager o superadmin
+
+    if (!restauranteId || !fecha || !horario || numAdultos < 1) {
+      res.status(400).json({ message: "Datos insuficientes para crear la reserva" });
       return;
     }
 
-    const reservationData = {
-      ...req.body,
-      usuario: req.user._id,
-    };
+    let reserva;
+    if (userRole === "customer") {
+      if (clienteId && clienteId !== userId) {
+        res.status(403).json({ message: "No puedes reservar en nombre de otro usuario" });
+        return;
+      }
+      reserva = await createCustomerReservationService(userId, restauranteId, fecha, horario, numAdultos, numNinos, pedidosEspeciales);
+    } else if (userRole === "manager") {
+      reserva = await createManagerReservationService(userId, clienteId, restauranteId, fecha, horario, numAdultos, numNinos, pedidosEspeciales);
+    } else if (userRole === "superadmin") {
+      reserva = await createSuperadminReservationService(clienteId, restauranteId, fecha, horario, numAdultos, numNinos, pedidosEspeciales);
+    } else {
+      res.status(403).json({ message: "No tienes permisos para crear una reserva" });
+      return;
+    }
 
-    const reservation = await createReservationService(reservationData);
-    res.status(201).json({ message: "Reserva creada con éxito.", reservation });
+    res.status(201).json(reserva);
   } catch (error) {
-    console.error("Error creando la reserva:", error);
-    res.status(500).json({ message: "Error creando la reserva", error });
+    console.error("Error al crear reserva:", error);
+    res.status(500).json({ message: "Error interno al crear la reserva", error: error instanceof Error ? error.message : "Error desconocido" });
   }
 };
 
