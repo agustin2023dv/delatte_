@@ -11,7 +11,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, router } from "expo-router";
 import { loginCustomerService } from "services/auth/login.service";
-import { validateEmail, validatePassword } from "@delatte/shared";
+import { validateEmail, validatePassword } from "@delatte/shared/utils";
 
 export default function LoginCustomer() {
   const [email, setEmail] = useState("");

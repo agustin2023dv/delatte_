@@ -16,7 +16,7 @@ import {
   fetchUserDataService,
   updateUserDataService,
 } from "@/services/user/profile.service";
-import { IUser } from "@delatte/shared";
+import { IUser } from "@delatte/shared/interfaces";
 
 export default function AccountSettings() {
   const [managerData, setManagerData] = useState<IUser | null>(null);

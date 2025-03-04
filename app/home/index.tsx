@@ -4,7 +4,7 @@ import SearchBar from "@/components/search/SearchBar";
 import NavBar from "@/components/navbar/navbar";
 import Categories from "@/components/categories/categories";
 import Discoveries from "components/discoveries/discoveries";
-import AboutUs from "@/components/aboutUs/aboutUs"; // Nuevo componente
+import AboutUs from "@/components/aboutUs/aboutUs"; 
 import TopExperiences from "@/components/topExpiriences/topExpiriences";
 import Footer from "@/components/footer/footer";
 

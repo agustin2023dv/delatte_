@@ -2,7 +2,7 @@
 import { useAuth } from '@/hooks/useAuth';
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Alert, 
-  Modal, TextInput, Button, ScrollView } from 'react-native';
+  Modal, TextInput, ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { changePasswordService } from '@/services/auth/password.service';

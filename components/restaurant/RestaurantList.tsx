@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import { IRestaurant } from "@delatte/shared";
+import { IRestaurant } from "@delatte/shared/interfaces";
 import { RestaurantCard } from "./RestaurantCard";
 import { RestaurantDetails } from "./RestaurantDetails";
 

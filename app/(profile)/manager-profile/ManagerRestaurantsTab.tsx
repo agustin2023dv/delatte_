@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import RestaurantsList from "../../../components/restaurant/RestaurantList";
 import { getRestaurantsByManagerIdService } from "services/restaurant.service";
 import {useAuth} from 'hooks/useAuth';
-import { IRestaurant } from "@delatte/shared";
+import { IRestaurant } from "@delatte/shared/interfaces";
 
 const ManagerRestaurantsTab: React.FC = () => {
   const {id} = useAuth();

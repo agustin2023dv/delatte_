@@ -18,7 +18,7 @@ import {
   validateRestaurantName,
   validateRestaurantPostCode,
   validateRestaurantAddress,
-} from "@delatte/shared";
+} from "@delatte/shared/utils";
 import { createRestaurantAndManagerService } from "@/services/restaurant.service";
 
 export default function ManagerRegister() {
