@@ -1,5 +1,5 @@
 import axiosInstance from "@/config/axiosInstance";
-import { IRestaurant,IUser } from "@delatte/shared/interfaces";
+import { IRestaurant, IUser } from "@delatte/shared/interfaces";
 
 // **Crear manager y restaurante**
 export const createRestaurantAndManagerService = async (
@@ -7,7 +7,7 @@ export const createRestaurantAndManagerService = async (
   managerData: Partial<IUser>
 ) => {
   try {
-    const response = await axiosInstance.post("/restaurantes/register-restaurant", {
+    const response = await axiosInstance.post("/restaurantes", {
       restaurant: restaurantData,
       manager: managerData,
     });
@@ -55,9 +55,9 @@ export const updateRestaurantService = async (
 };
 
 // **Obtener restaurantes gestionados por un manager**
-export const getRestaurantsByManagerIdService = async (id: string) => {
+export const getRestaurantsByManagerIdService = async (managerId: string) => {
   try {
-    const response = await axiosInstance.get(`/restaurantes/manager/${id}`);
+    const response = await axiosInstance.get(`/restaurantes/managers/${managerId}/restaurants`);
     return response.data;
   } catch (error) {
     console.error("Error al obtener restaurantes del manager:", error);
@@ -79,7 +79,7 @@ export const getReviewsService = async (restaurantId: string) => {
 // **Buscar restaurantes**
 export const searchRestaurantsService = async (query: string) => {
   try {
-    const response = await axiosInstance.get("/restaurantes/search", { params: { q: query } });
+    const response = await axiosInstance.get("/restaurantes", { params: { search: query } });
     return response.data;
   } catch (error) {
     console.error("Error al buscar restaurantes:", error);
@@ -143,7 +143,9 @@ export const getGalleryPhotosService = async (restaurantId: string) => {
 // **Obtener restaurantes cercanos**
 export const getNearbyRestaurantsService = async (lat: number, lng: number, radius: number) => {
   try {
-    const response = await axiosInstance.get(`/restaurantes/nearby/${lng}/${lat}/${radius}`);
+    const response = await axiosInstance.get(`/restaurantes/nearby`, {
+      params: { lat, lng, radius }
+    });
     return response.data;
   } catch (error) {
     console.error("Error obteniendo restaurantes cercanos:", error);
