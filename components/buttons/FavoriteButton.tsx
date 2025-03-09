@@ -5,7 +5,7 @@ import {
   addFavoriteRestaurantService,
   removeFavoriteRestaurantService,
   getUserFavoritesService,
-} from "@/services/user/favorites.service";
+} from "@/services/customer/user/favorites.service";
 
 interface FavoriteButtonProps {
   restaurantId: string; // El ID del restaurante

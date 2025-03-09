@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { resetPasswordService } from '@/services/auth/password.service';
+import { resetPasswordService } from '@/services/shared/auth/password.service';
 
 export default function ResetPassword() {
   const { token, id: userId } = useLocalSearchParams(); // Obtiene los parámetros de la URL
@@ -33,7 +33,7 @@ export default function ResetPassword() {
 
     try {
       setIsLoading(true);
-      await resetPasswordService(userId as string, token as string, newPassword); // Llama al servicio que maneja la lógica de restablecimiento
+      await resetPasswordService( token as string, newPassword); 
       Alert.alert('Éxito', 'Tu contraseña ha sido restablecida correctamente.');
       router.replace('../login'); // Redirige al login tras el éxito
     } catch (err: any) {

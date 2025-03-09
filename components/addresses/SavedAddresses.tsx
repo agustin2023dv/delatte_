@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { getUserAddressesService } from "../../services/user/address.service";
+import { getUserAddressesService } from "../../services/customer/user/address.service";
 
 export default function SavedAddresses() {
   const [addresses, setAddresses] = useState<string[]>([]);

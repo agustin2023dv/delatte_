@@ -1,4 +1,4 @@
-import { requestPasswordResetService } from '@/services/auth/password.service';
+import { requestPasswordResetService } from '@/services/shared/auth/password.service';
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';

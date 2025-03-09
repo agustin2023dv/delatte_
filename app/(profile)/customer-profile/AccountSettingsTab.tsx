@@ -5,8 +5,8 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, Alert,
   Modal, TextInput, ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { changePasswordService } from '@/services/auth/password.service';
-import { fetchUserDataService } from '@/services/user/profile.service';
+import { changePasswordService } from '@/services/shared/auth/password.service';
+import { fetchUserDataService } from '@/services/customer/user/profile.service';
 
 interface UserData {
   nombre: string;

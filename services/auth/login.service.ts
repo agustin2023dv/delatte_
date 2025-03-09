@@ -3,18 +3,9 @@ import { setItem } from "@/storage/storage";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-// **Servicio para iniciar sesión como Manager**
-export const loginManagerService = async (email: string, password: string) => {
-  return await loginUser("/auth/login-manager", email, password);
-};
-
-// **Servicio para iniciar sesión como Customer**
-export const loginCustomerService = async (email: string, password: string) => {
-  return await loginUser("/auth/login-customer", email, password);
-};
 
 // **Función Genérica para el Login**
-const loginUser = async (endpoint: string, email: string, password: string) => {
+export const loginUser = async (endpoint: string, email: string, password: string) => {
   try {
     const response = await axiosInstance.post(endpoint, { email, password });
     const { token, user } = response.data;

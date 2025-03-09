@@ -15,7 +15,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import {
   fetchUserDataService,
   updateUserDataService,
-} from "@/services/user/profile.service";
+} from "@/services/customer/user/profile.service";
 import { IUser } from "@delatte/shared/interfaces";
 
 export default function AccountSettings() {
