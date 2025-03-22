@@ -1,4 +1,4 @@
-import axiosInstance from "@/config/axiosInstance";
+import axiosInstance from "@/config/axios/axiosInstance";
 import { IMenu, IMenuItem } from "@delatte/shared/interfaces";
 
 // **Obtener menús de un restaurante**

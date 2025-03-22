@@ -1,4 +1,4 @@
-import axiosInstance from "@/config/axiosInstance";
+import axiosInstance from "@/config/axios/axiosInstance";
 import { IRestaurant, IUser } from "@delatte/shared/interfaces";
 
 // **Crear manager y restaurante**

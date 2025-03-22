@@ -1,4 +1,4 @@
-import axiosInstance from "@/config/axiosInstance";
+import axiosInstance from "@/config/axios/axiosInstance";
 import { setItem } from "@/storage/storage";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";

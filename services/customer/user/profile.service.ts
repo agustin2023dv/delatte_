@@ -1,5 +1,5 @@
 import { IUser } from '@delatte/shared/interfaces';
-import axiosInstance from '@/config/axiosInstance';
+import axiosInstance from '@/config/axios/axiosInstance';
 
 // **Función para obtener datos de usuario**
 export const fetchUserDataService = async () => {

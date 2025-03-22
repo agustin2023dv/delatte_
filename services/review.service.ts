@@ -1,4 +1,4 @@
-import axiosInstance from "@/config/axiosInstance";
+import axiosInstance from "@/config/axios/axiosInstance";
 
 // **Servicio para crear una review**
 export const createReviewService = async (reviewData: {

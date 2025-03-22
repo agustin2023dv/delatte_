@@ -1,4 +1,4 @@
-import axiosInstance from "@/config/axiosInstance";
+import axiosInstance from "@/config/axios/axiosInstance";
 import { isAxiosError } from "axios";
 
 // **Función para registrar un nuevo usuario**

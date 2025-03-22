@@ -1,5 +1,5 @@
 import { isAxiosError } from "axios";
-import axiosInstance from "@/config/axiosInstance";
+import axiosInstance from "@/config/axios/axiosInstance";
 
 // **Servicio para solicitar restablecimiento de contraseña**
 export const requestPasswordResetService = async (email: string): Promise<void> => {

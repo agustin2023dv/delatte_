@@ -1,4 +1,4 @@
-import axiosInstance from '@/config/axiosInstance';
+import axiosInstance from '@/config/axios/axiosInstance';
 
     export const getUserFavoritesService = async () => {
       try {

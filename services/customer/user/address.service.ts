@@ -1,4 +1,4 @@
-import axiosInstance from "@/config/axiosInstance";
+import axiosInstance from "@/config/axios/axiosInstance";
 
 // **Obtener las direcciones del usuario**
 export const getUserAddressesService = async () => {
