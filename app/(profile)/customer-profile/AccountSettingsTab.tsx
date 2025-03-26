@@ -7,6 +7,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, Alert,
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { changePasswordService } from '@/services/shared/auth/password.service';
 import { fetchUserDataService } from '@/services/customer/user/profile.service';
+import * as ImagePicker from 'expo-image-picker';
 
 interface UserData {
   nombre: string;
@@ -64,6 +65,27 @@ export default function AccountSettings() {
     }
   };
 
+  const handlePickImage = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permissionResult.granted) {
+      Alert.alert("Permiso requerido", "Se necesita acceso a la galería para cambiar la imagen.");
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled && result.assets.length > 0) {
+      const newImageUri = result.assets[0].uri;
+      setUserData(prev => prev ? { ...prev, profileImage: newImageUri } : null);
+    }
+  };
+
   const handleToggle2FA = () => {
     Alert.alert("Autenticación de Dos Factores", 
       "Función para activar/desactivar 2FA."); // Función para activar/desactivar 2FA
@@ -96,6 +118,9 @@ export default function AccountSettings() {
                     source={{ uri: userData.profileImage ? userData.profileImage : 'https://via.placeholder.com/100' }} 
                     style={styles.profileImage} 
                   />
+                <TouchableOpacity style={styles.editImageButton} onPress={handlePickImage}>
+                <Text style={styles.editImageText}>Cambiar imagen de perfil</Text>
+              </TouchableOpacity>
                 <Text style={styles.info}>Nombre: {userData.nombre}</Text>
                 <Text style={styles.info}>Email: {userData.email}</Text>
               
@@ -269,6 +294,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 14,
     textTransform: "uppercase",
+  },
+  editImageButton: {
+    marginTop: 10,
+    backgroundColor: '#A58D7F',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+    alignSelf: 'center',
+  },
+  editImageText: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
   scrollContainer: {
     paddingBottom: 20,
